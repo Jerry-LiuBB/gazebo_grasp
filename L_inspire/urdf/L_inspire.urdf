@@ -1,0 +1,1184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot  name="L_inspire" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:include filename="$(find rm_description)/urdf/RM65/rm_65.transmission.xacro"/>
+<xacro:include filename="$(find rm_description)/urdf/RM65/rm_65.gazebo.xacro"/>
+  <!-- Inertial matrix -->
+  <xacro:macro name="inertial_matrix" params="mass">
+    <inertial>
+      <mass value="${mass}" />
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0" />
+	</inertial>
+  </xacro:macro>
+  <xacro:macro name="Box_inertial_matrix" params="m l w h">
+    <inertial>
+      <mass value="${m}" />
+        <inertia ixx="${m*(h*h + l*l)/12}" ixy = "0" ixz = "0"
+          iyy="${m*(w*w + l*l)/12}" iyz= "0"
+          izz="${m*(w*w + h*h)/12}" />
+    </inertial>
+  </xacro:macro>
+  <link name="dummy">
+  </link>
+  
+  <!-- ///////////////////////////////////////   bottom_joint   ////////////////////////////////////////// -->
+  <joint name="bottom_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_link"/>
+    <child link="bottom_link"/>
+  </joint>
+  <link name="bottom_link">
+    <visual>
+      <origin xyz=" 0 0 -0.02"  rpy="0 0 0"/>
+      <geometry>
+        <box size="0.06 0.06 0.02" />
+      </geometry>
+      <material name="Brown" />
+    </visual>
+    <collision>
+      <origin xyz=" 0 0 0"  rpy="0 0 0"/>
+      <geometry>
+        <box size="0.06 0.06 0.02" />
+      </geometry>
+    </collision>
+    <xacro:Box_inertial_matrix m="500" l="1" w="1" h="0.02"/>
+  </link>
+    
+
+
+<!-- RM65-B左臂 -->
+
+  <link
+    name="l_base_link">
+    <inertial>
+      <origin
+        xyz="-0.00033271 -2.2498E-05 0.060153"
+        rpy="0 0 0" />
+      <mass
+        value="0.83984" />
+      <inertia
+        ixx="0.0017115"
+        ixy="4.0323E-06"
+        ixz="-4.7031E-05"
+        iyy="0.0016829"
+        iyz="1.8604E-06"
+        izz="0.00089155" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  
+  <gazebo reference="l_base_link">
+    <mu1 value="200000.0"/>
+    <mu2 value="200000.0"/>
+    <kp value="100000000.0"/>
+    <kd value="1.0"/>
+  </gazebo>
+  
+  <joint name="dummy_joint" type="fixed">
+    <parent link="dummy" />
+    <child link="l_base_link" />
+  </joint>  
+  
+  <link
+    name="l_link1">
+    <inertial>
+      <origin
+        xyz="-2.9675E-07 0.021107 -0.025188"
+        rpy="0 0 0" />
+      <mass
+        value="0.59353" />
+      <inertia
+        ixx="0.0012661"
+        ixy="-5.363E-09"
+        ixz="-2.109E-09"
+        iyy="0.0011816"
+        iyz="-0.00021118"
+        izz="0.00056131" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_joint1"
+    type="revolute">
+    <origin
+      xyz="0 0 0.2405"
+      rpy="0 0 0" />
+    <parent
+      link="l_base_link" />
+    <child
+      link="l_link1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.11"
+      upper="3.11"
+      effort="60"
+      velocity="3.14" />
+  </joint>
+  <link
+    name="l_link2">
+    <inertial>
+      <origin
+        xyz="0.15226 2.3916E-07 -0.0062027"
+        rpy="0 0 0" />
+      <mass
+        value="0.86416" />
+      <inertia
+        ixx="0.00063253"
+        ixy="2.0103E-09"
+        ixz="0.00042162"
+        iyy="0.0020527"
+        iyz="3.5857E-09"
+        izz="0.0019528" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_joint2"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="1.5708 -1.5708 0" />
+    <parent
+      link="l_link1" />
+    <child
+      link="l_link2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-2.27"
+      upper="2.27"
+      effort="60"
+      velocity="3.14" />
+  </joint>
+  <link
+    name="l_link3">
+    <inertial>
+      <origin
+        xyz="4.7194E-06 -0.059592 0.010268"
+        rpy="0 0 0" />
+      <mass
+        value="0.28963" />
+      <inertia
+        ixx="0.00063737"
+        ixy="-6.2601E-08"
+        ixz="-3.5046E-08"
+        iyy="0.00015649"
+        iyz="-0.00014461"
+        izz="0.00061418" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_joint3"
+    type="revolute">
+    <origin
+      xyz="0.256 0 0"
+      rpy="0 0 1.5708" />
+    <parent
+      link="l_link2" />
+    <child
+      link="l_link3" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-2.36"
+      upper="2.36"
+      effort="30"
+      velocity="3.925" />
+  </joint>
+  <link
+    name="l_link4">
+    <inertial>
+      <origin
+        xyz="2.9186E-07 -0.018042 -0.02154"
+        rpy="0 0 0" />
+      <mass
+        value="0.23942" />
+      <inertia
+        ixx="0.00028595"
+        ixy="-2.3562E-09"
+        ixz="1.3938E-09"
+        iyy="0.00026273"
+        iyz="4.424E-05"
+        izz="0.0001199" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_joint4"
+    type="revolute">
+    <origin
+      xyz="0 -0.21 -0.00030007"
+      rpy="1.5708 0 0" />
+    <parent
+      link="l_link3" />
+    <child
+      link="l_link4" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.11"
+      upper="3.11"
+      effort="10"
+      velocity="3.925" />
+  </joint>
+  <link
+    name="l_link5">
+    <inertial>
+      <origin
+        xyz="4.2301E-06 -0.059381 0.0070671"
+        rpy="0 0 0" />
+      <mass
+        value="0.21879" />
+      <inertia
+        ixx="0.00035053"
+        ixy="-2.8554E-08"
+        ixz="-1.67E-08"
+        iyy="0.00010492"
+        iyz="-7.824E-05"
+        izz="0.00033447" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_link5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_link5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_joint5"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="l_link4" />
+    <child
+      link="l_link5" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-2.23"
+      upper="2.23"
+      effort="10"
+      velocity="3.925" />
+  </joint>
+  <link
+    name="l_link6">
+    <inertial>
+      <origin
+        xyz="-0.00081845 -1.3327E-05 0.016317"
+        rpy="0 0 0" />
+      <mass
+        value="0.064802" />
+      <inertia
+        ixx="2.102E-05"
+        ixy="-2.2708E-08"
+        ixz="2.4381E-08"
+        iyy="1.7985E-05"
+        iyz="1.0173E-08"
+        izz="3.1728E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_link6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://L_inspire/meshes/l_link6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="l_joint6"
+    type="revolute">
+    <origin
+      xyz="0 -0.115 -0.00029971"
+      rpy="-1.5708 0 3.1416" />
+    <parent
+      link="l_link5" />
+    <child
+      link="l_link6" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-6.28"
+      upper="6.28"
+      effort="10"
+      velocity="3.925" />
+  </joint>
+
+<!-- hand -->
+
+    <joint 
+      name="L_base_link_joint" 
+      type="fixed">
+      <origin
+      xyz="0 0 0.03"
+      rpy="-1.570796 0 3.14" />
+      <parent link="l_link6"/>
+      <child link="L_hand_base_link"/>
+    </joint>
+
+    <link name="L_hand_base_link">
+      <inertial>
+        <origin
+          xyz="-0.002551 -0.066047 -0.0019357"
+          rpy="0 0 0" />
+        <mass
+          value="0.14143" />
+        <inertia
+          ixx="0.0001234"
+          ixy="2.1995E-06"
+          ixz="-1.7694E-06"
+          iyy="8.3835E-05"
+          iyz="1.5968E-06"
+          izz="7.7231E-05" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/base_link.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="1 1 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/base_link.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="L_thumb_proximal_base">
+      <inertial>
+        <origin
+          xyz="0.0048817 0.00038782 -0.00722"
+          rpy="0 0 0" />
+        <mass
+          value="0.0018869" />
+        <inertia
+          ixx="5.5158E-08"
+          ixy="-1.1803E-08"
+          ixz="-4.6743E-09"
+          iyy="8.2164E-08"
+          iyz="-1.3521E-09"
+          izz="6.7434E-08" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link11.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.82745 0.83922 0.82745 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link11.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint
+      name="L_thumb_proximal_yaw_joint"
+      type="revolute">
+      <origin
+        xyz="-0.01696 -0.0691 0.02045"
+        rpy="1.5708 -1.5708 0" />
+      <parent
+        link="L_hand_base_link" />
+      <child
+        link="L_thumb_proximal_base" />
+      <axis
+        xyz="0 0 1" />
+      <limit
+        lower="-0.1"
+        upper="1.3"
+        effort="1"
+        velocity="0.5" />
+    </joint>
+
+    <link name="L_thumb_proximal">
+      <inertial>
+        <origin
+          xyz="0.021936 -0.01279 -0.0080386"
+          rpy="0 0 0" />
+        <mass
+          value="0.0066101" />
+        <inertia
+          ixx="1.5693E-06"
+          ixy="7.8339E-07"
+          ixz="8.5959E-10"
+          iyy="1.7356E-06"
+          iyz="1.0378E-09"
+          izz="2.787E-06" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link12.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="1 1 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link12.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint
+      name="L_thumb_proximal_pitch_joint"
+      type="revolute">
+      <origin
+        xyz="0.0099867 0.0098242 -0.0089"
+        rpy="-1.5708 0 0.16939" />
+      <parent
+        link="L_thumb_proximal_base" />
+      <child
+        link="L_thumb_proximal" />
+      <axis
+        xyz="0 0 -1" />
+      <limit
+        lower="-0.1"
+        upper="0.6"
+        effort="1"
+        velocity="0.5" />
+    </joint>
+
+    <link name="L_thumb_intermediate">
+      <inertial>
+        <origin
+          xyz="0.0095531 0.0016282 -0.0072002"
+          rpy="0 0 0" />
+        <mass
+          value="0.0037844" />
+        <inertia
+          ixx="3.6981E-07"
+          ixy="9.8603E-08"
+          ixz="-2.8173E-12"
+          iyy="3.2395E-07"
+          iyz="-2.8028E-12"
+          izz="4.6532E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link13.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="1 1 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link13.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint
+      name="L_thumb_intermediate_joint"
+      type="revolute">
+      <origin
+        xyz="0.04407 -0.034553 -0.0008"
+        rpy="0 0 0" />
+      <parent
+        link="L_thumb_proximal" />
+      <child
+        link="L_thumb_intermediate" />
+      <axis
+        xyz="0 0 -1" />
+      <limit
+        lower="0"
+        upper="0.8"
+        effort="1"
+        velocity="0.5" />
+      <mimic 
+        joint="L_thumb_proximal_pitch_joint"
+        multiplier="1.6"
+        offset="0" />
+    </joint>
+
+    <link name="L_thumb_distal">
+      <inertial>
+        <origin
+          xyz="0.0092888 -0.004953 -0.0060033"
+          rpy="0 0 0" />
+        <mass
+          value="0.003344" />
+        <inertia
+          ixx="1.3632E-07"
+          ixy="5.6787E-08"
+          ixz="-9.1939E-11"
+          iyy="1.4052E-07"
+          iyz="1.2145E-10"
+          izz="2.0026E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link14.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="1 1 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link14.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint
+      name="L_thumb_distal_joint"
+      type="revolute">
+      <origin
+        xyz="0.020248 -0.010156 -0.0012"
+        rpy="0 0 0" />
+      <parent
+        link="L_thumb_intermediate" />
+      <child
+        link="L_thumb_distal" />
+      <axis
+        xyz="0 0 -1" />
+      <limit
+        lower="0"
+        upper="1.2"
+        effort="1"
+        velocity="0.5" />
+      <mimic 
+        joint="L_thumb_proximal_pitch_joint"
+        multiplier="2.4"
+        offset="0" />
+    </joint>
+
+    <link name="L_index_proximal">
+      <inertial>
+        <origin
+          xyz="0.0012971 -0.011934 -0.0059998"
+          rpy="0 0 0" />
+        <mass
+          value="0.0042405" />
+        <inertia
+          ixx="6.6215E-07"
+          ixy="1.8442E-08"
+          ixz="1.3746E-12"
+          iyy="2.1167E-07"
+          iyz="-1.4773E-11"
+          izz="6.9402E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link15.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.79216 0.81961 0.93333 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link15.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint
+      name="L_index_proximal_joint"
+      type="revolute">
+      <origin
+        xyz="0.00028533 -0.13653 0.032268"
+        rpy="-0.034907 0 0" />
+      <parent
+        link="L_hand_base_link" />
+      <child
+        link="L_index_proximal" />
+      <axis
+        xyz="0 0 -1" />
+      <limit
+        lower="0"
+        upper="1.7"
+        effort="1"
+        velocity="0.5" />
+    </joint>
+
+    <link name="L_index_intermediate">
+      <inertial>
+        <origin
+          xyz="0.0021753 -0.019567 -0.005"
+          rpy="0 0 0" />
+        <mass
+          value="0.0045682" />
+        <inertia
+          ixx="7.6284E-07"
+          ixy="-8.063E-08"
+          ixz="3.6797E-13"
+          iyy="9.4308E-08"
+          iyz="1.5743E-13"
+          izz="7.8176E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link16.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="1 1 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link16.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint
+      name="L_index_intermediate_joint"
+      type="revolute">
+      <origin
+        xyz="-0.0024229 -0.032041 -0.001"
+        rpy="0 0 0" />
+      <parent
+        link="L_index_proximal" />
+      <child
+        link="L_index_intermediate" />
+      <axis
+        xyz="0 0 -1" />
+      <limit
+        lower="0"
+        upper="1.7"
+        effort="1"
+        velocity="0.5" />
+      <mimic 
+        joint="L_index_proximal_joint"
+        multiplier="1"
+        offset="0" />
+    </joint>
+
+    <link name="L_middle_proximal">
+      <inertial>
+        <origin
+          xyz="0.0012971 -0.011934 -0.0059999"
+          rpy="0 0 0" />
+        <mass
+          value="0.0042405" />
+        <inertia
+          ixx="6.6215E-07"
+          ixy="1.8442E-08"
+          ixz="1.2299E-12"
+          iyy="2.1167E-07"
+          iyz="-1.4484E-11"
+          izz="6.9402E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link17.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.79216 0.81961 0.93333 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link17.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint
+      name="L_middle_proximal_joint"
+      type="revolute">
+      <origin
+        xyz="0.00028533 -0.1371 0.01295"
+        rpy="0 0 0" />
+      <parent
+        link="L_hand_base_link" />
+      <child
+        link="L_middle_proximal" />
+      <axis
+        xyz="0 0 -1" />
+      <limit
+        lower="0"
+        upper="1.7"
+        effort="1"
+        velocity="0.5" />
+    </joint>
+
+    <link name="L_middle_intermediate">
+      <inertial>
+        <origin
+          xyz="0.001921 -0.020796 -0.0049999"
+          rpy="0 0 0" />
+        <mass
+          value="0.0050397" />
+        <inertia
+          ixx="9.5823E-07"
+          ixy="-1.1425E-07"
+          ixz="-2.4186E-12"
+          iyy="1.0646E-07"
+          iyz="3.6974E-12"
+          izz="9.8385E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link18.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.82745 0.83922 0.82745 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link18.STL" />
+        </geometry>
+      </collision>
+    </link>
+    
+    <joint
+      name="L_middle_intermediate_joint"
+      type="revolute">
+      <origin
+        xyz="-0.0024229 -0.032041 -0.001"
+        rpy="0 0 0" />
+      <parent
+        link="L_middle_proximal" />
+      <child
+        link="L_middle_intermediate" />
+      <axis
+        xyz="0 0 -1" />
+      <limit
+        lower="0"
+        upper="1.7"
+        effort="1"
+        velocity="0.5" />
+      <mimic 
+        joint="L_middle_proximal_joint"
+        multiplier="1"
+        offset="0" />
+    </joint>
+
+    <link name="L_ring_proximal">
+      <inertial>
+        <origin
+          xyz="0.0012971 -0.011934 -0.0059999"
+          rpy="0 0 0" />
+        <mass
+          value="0.0042405" />
+        <inertia
+          ixx="6.6215E-07"
+          ixy="1.8442E-08"
+          ixz="9.6052E-13"
+          iyy="2.1167E-07"
+          iyz="-1.4124E-11"
+          izz="6.9402E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link19.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.79216 0.81961 0.93333 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link19.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint
+      name="L_ring_proximal_joint"
+      type="revolute">
+      <origin
+        xyz="0.00028533 -0.13691 -0.0062872"
+        rpy="0.05236 0 0" />
+      <parent
+        link="L_hand_base_link" />
+      <child
+        link="L_ring_proximal" />
+      <axis
+        xyz="0 0 -1" />
+      <limit
+        lower="0"
+        upper="1.7"
+        effort="1"
+        velocity="0.5" />
+    </joint>
+
+    <link name="L_ring_intermediate">
+      <inertial>
+        <origin
+          xyz="0.0021753 -0.019567 -0.005"
+          rpy="0 0 0" />
+        <mass
+          value="0.0045682" />
+        <inertia
+          ixx="7.6285E-07"
+          ixy="-8.0631E-08"
+          ixz="3.3472E-14"
+          iyy="9.4308E-08"
+          iyz="-4.4773E-13"
+          izz="7.8176E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link20.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="1 1 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link20.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint
+      name="L_ring_intermediate_joint"
+      type="revolute">
+      <origin
+        xyz="-0.0024229 -0.032041 -0.001"
+        rpy="0 0 0" />
+      <parent
+        link="L_ring_proximal" />
+      <child
+        link="L_ring_intermediate" />
+      <axis
+        xyz="0 0 -1" />
+      <limit
+        lower="0"
+        upper="1.7"
+        effort="1"
+        velocity="0.5" />
+      <mimic 
+        joint="L_ring_proximal_joint"
+        multiplier="1"
+        offset="0" />
+    </joint>
+
+    <link name="L_pinky_proximal">
+      <inertial>
+        <origin
+          xyz="0.0012971 -0.011934 -0.0059999"
+          rpy="0 0 0" />
+        <mass
+          value="0.0042405" />
+        <inertia
+          ixx="6.6215E-07"
+          ixy="1.8442E-08"
+          ixz="1.0279E-12"
+          iyy="2.1167E-07"
+          iyz="-1.4277E-11"
+          izz="6.9402E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link21.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.79216 0.81961 0.93333 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link21.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint
+      name="L_pinky_proximal_joint"
+      type="revolute">
+      <origin
+        xyz="0.00028533 -0.13571 -0.025488"
+        rpy="0.10472 0 0" />
+      <parent
+        link="L_hand_base_link" />
+      <child
+        link="L_pinky_proximal" />
+      <axis
+        xyz="0 0 -1" />
+      <limit
+        lower="0"
+        upper="1.7"
+        effort="1"
+        velocity="0.5" />
+    </joint>
+
+    <link name="L_pinky_intermediate">
+      <inertial>
+        <origin
+          xyz="0.0024788 -0.016208 -0.0050001"
+          rpy="0 0 0" />
+        <mass
+          value="0.0036036" />
+        <inertia
+          ixx="4.3923E-07"
+          ixy="-4.1355E-08"
+          ixz="1.2263E-12"
+          iyy="7.0315E-08"
+          iyz="3.1311E-12"
+          izz="4.4881E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link22.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="1 1 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://L_inspire/meshes/Link22.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint
+      name="L_pinky_intermediate_joint"
+      type="revolute">
+      <origin
+        xyz="-0.0024229 -0.032041 -0.001"
+        rpy="0 0 0" />
+      <parent
+        link="L_pinky_proximal" />
+      <child
+        link="L_pinky_intermediate" />
+      <axis
+        xyz="0 0 -1" />
+      <limit
+        lower="0"
+        upper="1.7"
+        effort="1"
+        velocity="0.5" />
+      <mimic 
+        joint="L_pinky_proximal_joint"
+        multiplier="1"
+        offset="0" />
+    </joint>
+
+</robot>

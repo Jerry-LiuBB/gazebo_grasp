@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: inspire_hand_description
+    relative_path: robots/inspire_hand_left.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/inspire_hand_left.srdf
+  CONFIG:
+    author_name: a
+    author_email: 22@qq.com
+    generated_timestamp: 1743131089

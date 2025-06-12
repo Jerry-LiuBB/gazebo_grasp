@@ -1,0 +1,29 @@
+controller_list:
+  - name: arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+      - joint5
+      - joint6
+  - name: hand_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - joint_link1
+      - joint_link11
+      - joint_link2
+      - joint_link22
+      - joint_link3
+      - joint_link33
+      - joint_link4
+      - joint_link44
+      - joint_link5
+      - joint_link51
+      - joint_link52
+      - joint_link53

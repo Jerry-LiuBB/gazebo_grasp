@@ -1,0 +1,17 @@
+<launch>
+   <arg name="paused" default="false" /> 
+   <arg name="use_sim_time" default="true" />
+   <arg name="gui" default="true" />
+   <arg name="headless" default="false" /> 
+   <arg name="debug" default="false" /> 
+   <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="debug" value="$(arg debug)" />
+      <arg name="gui" value="$(arg gui)" />
+      <arg name="paused" value="$(arg paused)" />
+      <arg name="use_sim_time" value="$(arg use_sim_time)" /> 
+   </include>
+   <param name="robot_description" command="$(find xacro)/xacro '$(find dual_65B_arm_robot)/urdf/dual_65B_arm_robot.urdf.xacro'" />
+  <!--<param name="robot_description" textfile="$(find dual_75B_arm_robot)/urdf/dual_75B_arm_robot.urdf" />-->
+   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model dual_65B_arm_robot -param robot_description -x 0 -y 0 -z 0.1" />
+</launch>
+
