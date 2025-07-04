@@ -106,10 +106,10 @@
         <pose>0.179972 -0.798292 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <model name='coke_can'>
-          <pose>0.28 -0.647998 1.02069 0 -0 0</pose>
+          <pose>0.27 -0.64 1.02069 0 -0 0</pose>
           <scale>1 1 1</scale>
           <link name='coke_link'>
-            <pose>0.28 -0.647998 1.02069 0 -0 0</pose>
+            <pose>0.27 -0.64 1.02069 0 -0 0</pose>
             <velocity>0 0 0 0 -0 0</velocity>
             <acceleration>0 0 0 0 -0 0</acceleration>
             <wrench>0 0 0 0 -0 0</wrench>
